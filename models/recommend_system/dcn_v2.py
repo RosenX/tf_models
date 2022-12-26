@@ -1,8 +1,9 @@
 import tensorflow as tf
 from .. import ModelConfig
 from tensorflow.keras import layers
+from tf_models.models import BinaryClassifier
 
-class DCNConfig(ModelConfig):
+class DeepCrossNetworkV2Cofing(ModelConfig):
     def __init__(self, cross_layer_num, input_dim, dense_sizes, mlp_dense_sizes) -> None:
         super().__init__()
         self.cross_layer_num = cross_layer_num
@@ -37,15 +38,6 @@ class DenseBlock(tf.Module):
         for dense in self.dense_layers:
             x = dense(x)
         return x
-
-class BinaryClassifier(tf.Module):
-    def __init__(self, name):
-        super().__init__(name)
-        self.dense = layers.Dense(1, activation='sigmoid')
-
-    @tf.function
-    def __call__(self, x):
-        return self.dense(x)
 
 
 class DeepCrossNetworkV2(tf.Module):
