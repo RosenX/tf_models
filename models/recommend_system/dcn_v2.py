@@ -1,12 +1,6 @@
 import tensorflow as tf
-import numpy as np
-import pandas as pd
-from tensorflow.keras import layers, models, optimizers, losses
-from collections import namedtuple
-
-class ModelConfig:
-    def __init__(self) -> None:
-        pass
+from .. import ModelConfig
+from tensorflow.keras import layers
 
 class DCNConfig(ModelConfig):
     def __init__(self, cross_layer_num, input_dim, dense_sizes, mlp_dense_sizes) -> None:
@@ -54,9 +48,9 @@ class BinaryClassifier(tf.Module):
         return self.dense(x)
 
 
-class DeepCrossNetwork(tf.Module):
+class DeepCrossNetworkV2(tf.Module):
     def __init__(self, config, feature, name = 'DeepCrossNetwork'):
-        super(DeepCrossNetwork, self).__init__(name = name)
+        super().__init__(name = name)
         self.cross_block = CrossBlock(config.input_dim, config.cross_layer_num, 'cross_block')
         self.dense_block = DenseBlock(config.dense_sizes, 'dense_block')
         self.mlp_block = DenseBlock(config.mlp_dense_sizes, 'mlp_block')
